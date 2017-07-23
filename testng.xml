@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CoTeAFS Error Suite">
+	<test name="CoTeAFS Error Test">
+		<classes>
+			<class name="com.github.wasiqb.coteafs.error.util.ErrorUtilTest" />
+		</classes>
+	</test> <!-- CoTeAFS Config Test -->
+</suite> <!-- CoTeAFS Config Suite -->
