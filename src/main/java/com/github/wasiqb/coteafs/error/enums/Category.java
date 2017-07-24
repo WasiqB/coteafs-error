@@ -41,10 +41,10 @@ public enum Category {
 	 */
 	C5 ("Message");
 
-	private final String category;
+	private final String name;
 
-	private Category (String category) {
-		this.category = category;
+	private Category (String name) {
+		this.name = name;
 	}
 
 	/**
@@ -53,6 +53,6 @@ public enum Category {
 	 * @return category
 	 */
 	public String category () {
-		return this.category;
+		return this.name;
 	}
 }

@@ -81,6 +81,8 @@
 		<maven.resource.version>3.0.2</maven.resource.version>
 		<testng.version>6.11</testng.version>
 		<suite-xml>testng.xml</suite-xml>
+		<truth.version>0.34</truth.version>
+		<guava.version>22.0</guava.version>
 	</properties>
 
 	<repositories>
@@ -96,6 +98,7 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>${testng.version}</version>
+			<scope>test</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.yaml</groupId>
@@ -106,6 +109,23 @@
 					<artifactId>guava</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.truth</groupId>
+			<artifactId>truth</artifactId>
+			<version>${truth.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
 		</dependency>
 	</dependencies>
 	
@@ -261,8 +281,7 @@
 							<suiteXmlFiles>
 								<suiteXmlFile>${suite-xml}</suiteXmlFile>
 							</suiteXmlFiles>
-							<argLine>-Dfile.encoding=UTF-8 -Xdebug -Xnoagent
-								${surefireArgLine}</argLine>
+							<argLine>-Dfile.encoding=UTF-8 -Xdebug -Xnoagent ${surefireArgLine}</argLine>
 						</configuration>
 					</plugin>
 				</plugins>

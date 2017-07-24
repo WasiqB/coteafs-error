@@ -15,10 +15,6 @@
  */
 package com.github.wasiqb.coteafs.error;
 
-import com.github.wasiqb.coteafs.error.enums.Category;
-import com.github.wasiqb.coteafs.error.enums.Reason;
-import com.github.wasiqb.coteafs.error.enums.Severity;
-
 /**
  * @author Wasiq Bhamla
  * @since Jul 22, 2017 10:09:56 PM
@@ -39,34 +35,9 @@ public class NotImplementedError extends CoteafsError {
 	 * @author Wasiq Bhamla
 	 * @since Jul 22, 2017 10:09:56 PM
 	 * @param message
-	 * @param reason
-	 * @param category
-	 * @param severity
-	 */
-	public NotImplementedError (String message, Reason reason, Category category, Severity severity) {
-		super (message, reason, category, severity);
-	}
-
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 22, 2017 10:09:56 PM
-	 * @param message
 	 * @param cause
 	 */
 	public NotImplementedError (String message, Throwable cause) {
 		super (message, cause);
-	}
-
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 22, 2017 10:09:56 PM
-	 * @param message
-	 * @param cause
-	 * @param reason
-	 * @param category
-	 * @param severity
-	 */
-	public NotImplementedError (String message, Throwable cause, Reason reason, Category category, Severity severity) {
-		super (message, cause, reason, category, severity);
 	}
 }

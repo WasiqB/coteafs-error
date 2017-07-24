@@ -25,9 +25,9 @@ import com.github.wasiqb.coteafs.error.enums.Severity;
  */
 public class CoteafsError extends AssertionError {
 	private static final long	serialVersionUID	= -350027873597069923L;
-	private final Category		category;
-	private final Reason		reason;
-	private final Severity		severity;
+	private final Category		errorCategory;
+	private final Reason		errorReason;
+	private final Severity		errorSeverity;
 
 	/**
 	 * @author Wasiq Bhamla
@@ -71,9 +71,9 @@ public class CoteafsError extends AssertionError {
 	 */
 	public CoteafsError (String message, Throwable cause, Reason reason, Category category, Severity severity) {
 		super (message, cause);
-		this.reason = reason;
-		this.category = category;
-		this.severity = severity;
+		this.errorReason = reason;
+		this.errorCategory = category;
+		this.errorSeverity = severity;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class CoteafsError extends AssertionError {
 	 * @return the category
 	 */
 	public Category getCategory () {
-		return this.category;
+		return this.errorCategory;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class CoteafsError extends AssertionError {
 	 * @return the reason
 	 */
 	public Reason getReason () {
-		return this.reason;
+		return this.errorReason;
 	}
 
 	/**
@@ -100,6 +100,6 @@ public class CoteafsError extends AssertionError {
 	 * @return the severity
 	 */
 	public Severity getSeverity () {
-		return this.severity;
+		return this.errorSeverity;
 	}
 }

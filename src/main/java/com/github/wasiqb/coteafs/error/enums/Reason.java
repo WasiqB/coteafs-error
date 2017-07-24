@@ -29,10 +29,10 @@ public enum Reason {
 	 */
 	R2 ("Framework");
 
-	private final String reason;
+	private final String name;
 
-	private Reason (String reason) {
-		this.reason = reason;
+	private Reason (String name) {
+		this.name = name;
 	}
 
 	/**
@@ -41,6 +41,6 @@ public enum Reason {
 	 * @return reason
 	 */
 	public String reason () {
-		return this.reason;
+		return this.name;
 	}
 }

@@ -19,7 +19,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import com.github.wasiqb.coteafs.error.CoteafsError;
-import com.github.wasiqb.coteafs.error.OperationNotSupportedError;
 
 /**
  * @author Wasiq Bhamla
@@ -48,6 +47,6 @@ public class ErrorUtil {
 	}
 
 	private ErrorUtil () {
-		fail (OperationNotSupportedError.class);
+		// Utility class.
 	}
 }
