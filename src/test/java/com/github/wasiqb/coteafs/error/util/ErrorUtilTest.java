@@ -18,6 +18,7 @@ package com.github.wasiqb.coteafs.error.util;
 import static com.github.wasiqb.coteafs.error.util.ErrorUtil.fail;
 import static com.google.common.truth.Truth.assertThat;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -38,9 +39,17 @@ import com.github.wasiqb.coteafs.error.enums.Severity;
 public class ErrorUtilTest {
 	/**
 	 * @author Wasiq Bhamla
+	 * @since Jul 31, 2017 4:12:12 PM
+	 */
+	@Test (expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
+	public void testCoteafsErrorWithFiveArg () {
+		fail (CoteafsError.class, "Test Error!", null, Reason.R2, Category.C1, Severity.CRITICAL);
+	}
+
+	/**
+	 * @author Wasiq Bhamla
 	 * @since Jul 24, 2017 5:12:55 PM
 	 */
-	@SuppressWarnings ("unchecked")
 	@Test (expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
 	public void testCoteafsErrorWithFourArg () {
 		fail (CoteafsError.class, "Test Error!", Reason.R2, Category.C1, Severity.CRITICAL);
@@ -110,15 +119,6 @@ public class ErrorUtilTest {
 
 	/**
 	 * @author Wasiq Bhamla
-	 * @since Jul 23, 2017 2:58:39 PM
-	 */
-	@Test (expectedExceptions = CoteafsError.class)
-	public void testOperationNotSupportedErrorWithInvalidParams () {
-		fail (OperationNotSupportedError.class, 10);
-	}
-
-	/**
-	 * @author Wasiq Bhamla
 	 * @since Jul 23, 2017 2:55:32 PM
 	 */
 	@Test (expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
@@ -132,6 +132,6 @@ public class ErrorUtilTest {
 	 */
 	@Test (expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
 	public void testOperationNotSupportedErrorWithTwoArg () {
-		fail (OperationNotSupportedError.class, "Test Error!", new Throwable ());
+		fail (OperationNotSupportedError.class, "Test Error!", new FileNotFoundException ());
 	}
 }
