@@ -25,13 +25,21 @@ public enum Reason {
 	 */
 	R1 ("Application"),
 	/**
-	 * Framework error.
+	 * Appium Framework error.
 	 */
-	R2 ("Framework");
+	R2 ("Appium"),
+	/**
+	 * Config framework error.
+	 */
+	R3 ("Configurations"),
+	/**
+	 * API Services framework.
+	 */
+	R4 ("Services");
 
 	private final String name;
 
-	private Reason (String name) {
+	private Reason (final String name) {
 		this.name = name;
 	}
 
