@@ -43,7 +43,8 @@ public class ErrorUtilTest {
 	 */
 	@Test (expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
 	public void testCoteafsErrorWithFiveArg () {
-		fail (CoteafsError.class, "Test Error!", null, Reason.R2, Category.C1, Severity.CRITICAL);
+		fail (CoteafsError.class, "Test Error!", new FileNotFoundException (), Reason.R2, Category.C1,
+				Severity.CRITICAL);
 	}
 
 	/**
