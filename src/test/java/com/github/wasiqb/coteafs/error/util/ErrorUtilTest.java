@@ -43,8 +43,14 @@ public class ErrorUtilTest {
 	 */
 	@Test (expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
 	public void testCoteafsErrorWithFiveArg () {
-		fail (CoteafsError.class, "Test Error!", new FileNotFoundException (), Reason.R2, Category.C1,
-				Severity.CRITICAL);
+		try {
+			fail (CoteafsError.class, "Test Error!", new FileNotFoundException (), Reason.R2,
+				Category.C1, Severity.CRITICAL);
+		}
+		catch (final CoteafsError e) {
+			System.err.println (e);
+			throw e;
+		}
 	}
 
 	/**
@@ -67,8 +73,9 @@ public class ErrorUtilTest {
 	 * @throws InvocationTargetException
 	 */
 	@Test
-	public void testInitializationFailure () throws InstantiationException, IllegalAccessException,
-			NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+	public void testInitializationFailure ()
+		throws InstantiationException, IllegalAccessException, NoSuchMethodException,
+		SecurityException, IllegalArgumentException, InvocationTargetException {
 		final Class <ErrorUtil> clazz = ErrorUtil.class;
 		final Constructor <ErrorUtil> constructor = clazz.getDeclaredConstructor ();
 		assertThat (Modifier.isPrivate (constructor.getModifiers ())).named ("ctor modifier")
@@ -86,7 +93,8 @@ public class ErrorUtilTest {
 	 * @author Wasiq Bhamla
 	 * @since Jul 24, 2017 5:12:48 PM
 	 */
-	@Test (expectedExceptions = NotImplementedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+	@Test (expectedExceptions = NotImplementedError.class,
+		expectedExceptionsMessageRegExp = "Test Error!")
 	public void testNotImplementedErrorWithOneArg () {
 		fail (NotImplementedError.class, "Test Error!");
 	}
@@ -95,7 +103,8 @@ public class ErrorUtilTest {
 	 * @author Wasiq Bhamla
 	 * @since Jul 24, 2017 5:15:19 PM
 	 */
-	@Test (expectedExceptions = NotImplementedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+	@Test (expectedExceptions = NotImplementedError.class,
+		expectedExceptionsMessageRegExp = "Test Error!")
 	public void testNotImplementedErrorWithTwoArg () {
 		fail (NotImplementedError.class, "Test Error!", new Throwable ());
 	}
@@ -122,7 +131,8 @@ public class ErrorUtilTest {
 	 * @author Wasiq Bhamla
 	 * @since Jul 23, 2017 2:55:32 PM
 	 */
-	@Test (expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+	@Test (expectedExceptions = OperationNotSupportedError.class,
+		expectedExceptionsMessageRegExp = "Test Error!")
 	public void testOperationNotSupportedErrorWithOneArg () {
 		fail (OperationNotSupportedError.class, "Test Error!");
 	}
@@ -131,7 +141,8 @@ public class ErrorUtilTest {
 	 * @author Wasiq Bhamla
 	 * @since Jul 24, 2017 5:11:36 PM
 	 */
-	@Test (expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+	@Test (expectedExceptions = OperationNotSupportedError.class,
+		expectedExceptionsMessageRegExp = "Test Error!")
 	public void testOperationNotSupportedErrorWithTwoArg () {
 		fail (OperationNotSupportedError.class, "Test Error!", new FileNotFoundException ());
 	}
