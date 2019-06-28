@@ -15,6 +15,8 @@
  */
 package com.github.wasiqb.coteafs.error;
 
+import static java.text.MessageFormat.format;
+
 import com.github.wasiqb.coteafs.error.enums.Category;
 import com.github.wasiqb.coteafs.error.enums.Reason;
 import com.github.wasiqb.coteafs.error.enums.Severity;
@@ -34,7 +36,7 @@ public class CoteafsError extends AssertionError {
 	 * @since Jul 8, 2017 8:47:31 PM
 	 * @param message
 	 */
-	public CoteafsError (String message) {
+	public CoteafsError (final String message) {
 		this (message, null);
 	}
 
@@ -46,7 +48,8 @@ public class CoteafsError extends AssertionError {
 	 * @param category
 	 * @param severity
 	 */
-	public CoteafsError (String message, Reason reason, Category category, Severity severity) {
+	public CoteafsError (final String message, final Reason reason, final Category category,
+		final Severity severity) {
 		this (message, null, reason, category, severity);
 	}
 
@@ -56,7 +59,7 @@ public class CoteafsError extends AssertionError {
 	 * @param message
 	 * @param cause
 	 */
-	public CoteafsError (String message, Throwable cause) {
+	public CoteafsError (final String message, final Throwable cause) {
 		this (message, cause, Reason.R2, Category.C1, Severity.CRITICAL);
 	}
 
@@ -69,7 +72,8 @@ public class CoteafsError extends AssertionError {
 	 * @param category
 	 * @param severity
 	 */
-	public CoteafsError (String message, Throwable cause, Reason reason, Category category, Severity severity) {
+	public CoteafsError (final String message, final Throwable cause, final Reason reason,
+		final Category category, final Severity severity) {
 		super (message, cause);
 		this.errorReason = reason;
 		this.errorCategory = category;
@@ -101,5 +105,16 @@ public class CoteafsError extends AssertionError {
 	 */
 	public Severity getSeverity () {
 		return this.errorSeverity;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see @see java.lang.Throwable#toString()
+	 */
+	@Override
+	public String toString () {
+		return format ("Error occurred: {0}\nReason: {1}\nCategory: {2}\nSeverity: {3}",
+			getMessage (), this.errorReason.reason (), this.errorCategory.category (),
+			this.errorSeverity.name ());
 	}
 }
