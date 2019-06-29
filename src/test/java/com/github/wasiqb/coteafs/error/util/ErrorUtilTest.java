@@ -17,6 +17,7 @@ package com.github.wasiqb.coteafs.error.util;
 
 import static com.github.wasiqb.coteafs.error.util.ErrorUtil.fail;
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
@@ -78,7 +79,7 @@ public class ErrorUtilTest {
 		SecurityException, IllegalArgumentException, InvocationTargetException {
 		final Class <ErrorUtil> clazz = ErrorUtil.class;
 		final Constructor <ErrorUtil> constructor = clazz.getDeclaredConstructor ();
-		assertThat (Modifier.isPrivate (constructor.getModifiers ())).named ("ctor modifier")
+		assertWithMessage ("ctor modifier").that (Modifier.isPrivate (constructor.getModifiers ()))
 			.isTrue ();
 		try {
 			constructor.setAccessible (true);
