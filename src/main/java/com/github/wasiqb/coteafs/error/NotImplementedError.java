@@ -20,24 +20,24 @@ package com.github.wasiqb.coteafs.error;
  * @since Jul 22, 2017 10:09:56 PM
  */
 public class NotImplementedError extends CoteafsError {
-	private static final long serialVersionUID = 5669493204461208732L;
+    private static final long serialVersionUID = 5669493204461208732L;
 
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 22, 2017 10:09:56 PM
-	 * @param message
-	 */
-	public NotImplementedError (String message) {
-		super (message);
-	}
+    /**
+     * @author Wasiq Bhamla
+     * @since Jul 22, 2017 10:09:56 PM
+     * @param message
+     */
+    public NotImplementedError (final String message) {
+        super (message);
+    }
 
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 22, 2017 10:09:56 PM
-	 * @param message
-	 * @param cause
-	 */
-	public NotImplementedError (String message, Throwable cause) {
-		super (message, cause);
-	}
+    /**
+     * @author Wasiq Bhamla
+     * @since Jul 22, 2017 10:09:56 PM
+     * @param message
+     * @param cause
+     */
+    public NotImplementedError (final String message, final Throwable cause) {
+        super (message, cause);
+    }
 }

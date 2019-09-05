@@ -20,35 +20,35 @@ package com.github.wasiqb.coteafs.error.enums;
  * @since Jul 8, 2017 8:49:05 PM
  */
 public enum Reason {
-	/**
-	 * Application error.
-	 */
-	R1 ("Application"),
-	/**
-	 * Appium Framework error.
-	 */
-	R2 ("Appium"),
-	/**
-	 * Config framework error.
-	 */
-	R3 ("Configurations"),
-	/**
-	 * API Services framework.
-	 */
-	R4 ("Services");
+    /**
+     * Application error.
+     */
+    R1 ("Application"),
+    /**
+     * Appium Framework error.
+     */
+    R2 ("Appium"),
+    /**
+     * Config framework error.
+     */
+    R3 ("Configurations"),
+    /**
+     * API Services framework.
+     */
+    R4 ("Services");
 
-	private final String name;
+    private final String name;
 
-	private Reason (final String name) {
-		this.name = name;
-	}
+    private Reason (final String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 8, 2017 8:51:08 PM
-	 * @return reason
-	 */
-	public String reason () {
-		return this.name;
-	}
+    /**
+     * @author Wasiq Bhamla
+     * @since Jul 8, 2017 8:51:08 PM
+     * @return reason
+     */
+    public String reason () {
+        return this.name;
+    }
 }

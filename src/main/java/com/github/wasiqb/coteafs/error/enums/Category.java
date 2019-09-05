@@ -20,39 +20,39 @@ package com.github.wasiqb.coteafs.error.enums;
  * @since Jul 8, 2017 8:55:18 PM
  */
 public enum Category {
-	/**
-	 * Internal error.
-	 */
-	C1 ("Internal"),
-	/**
-	 * Validation error.
-	 */
-	C2 ("Validation"),
-	/**
-	 * Reteival error.
-	 */
-	C3 ("Retreival"),
-	/**
-	 * UI error.
-	 */
-	C4 ("UI"),
-	/**
-	 * Message error.
-	 */
-	C5 ("Message");
+    /**
+     * Internal error.
+     */
+    C1 ("Internal"),
+    /**
+     * Validation error.
+     */
+    C2 ("Validation"),
+    /**
+     * Reteival error.
+     */
+    C3 ("Retreival"),
+    /**
+     * UI error.
+     */
+    C4 ("UI"),
+    /**
+     * Message error.
+     */
+    C5 ("Message");
 
-	private final String name;
+    private final String name;
 
-	private Category (String name) {
-		this.name = name;
-	}
+    private Category (final String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 8, 2017 8:57:50 PM
-	 * @return category
-	 */
-	public String category () {
-		return this.name;
-	}
+    /**
+     * @author Wasiq Bhamla
+     * @since Jul 8, 2017 8:57:50 PM
+     * @return category
+     */
+    public String category () {
+        return this.name;
+    }
 }

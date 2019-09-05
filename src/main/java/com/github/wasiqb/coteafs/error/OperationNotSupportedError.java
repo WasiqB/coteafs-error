@@ -20,24 +20,24 @@ package com.github.wasiqb.coteafs.error;
  * @since Jul 22, 2017 10:11:20 PM
  */
 public class OperationNotSupportedError extends CoteafsError {
-	private static final long serialVersionUID = 8578673635479431302L;
+    private static final long serialVersionUID = 8578673635479431302L;
 
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 22, 2017 10:11:20 PM
-	 * @param message
-	 */
-	public OperationNotSupportedError (String message) {
-		super (message);
-	}
+    /**
+     * @author Wasiq Bhamla
+     * @since Jul 22, 2017 10:11:20 PM
+     * @param message
+     */
+    public OperationNotSupportedError (final String message) {
+        super (message);
+    }
 
-	/**
-	 * @author Wasiq Bhamla
-	 * @since Jul 22, 2017 10:11:20 PM
-	 * @param message
-	 * @param cause
-	 */
-	public OperationNotSupportedError (String message, Throwable cause) {
-		super (message, cause);
-	}
+    /**
+     * @author Wasiq Bhamla
+     * @since Jul 22, 2017 10:11:20 PM
+     * @param message
+     * @param cause
+     */
+    public OperationNotSupportedError (final String message, final Throwable cause) {
+        super (message, cause);
+    }
 }

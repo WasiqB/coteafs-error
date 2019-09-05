@@ -20,20 +20,20 @@ package com.github.wasiqb.coteafs.error.enums;
  * @since Jul 8, 2017 8:53:05 PM
  */
 public enum Severity {
-	/**
-	 * Critical error.
-	 */
-	CRITICAL,
-	/**
-	 * High priority error.
-	 */
-	HIGH,
-	/**
-	 * Low priority error.
-	 */
-	LOW,
-	/**
-	 * Medium priority error.
-	 */
-	MIDIUM
+    /**
+     * Critical error.
+     */
+    CRITICAL,
+    /**
+     * High priority error.
+     */
+    HIGH,
+    /**
+     * Low priority error.
+     */
+    LOW,
+    /**
+     * Medium priority error.
+     */
+    MIDIUM
 }
