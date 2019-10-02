@@ -15,8 +15,13 @@
  */
 package com.github.wasiqb.coteafs.error.util;
 
+import static java.text.MessageFormat.format;
+import static java.util.Collections.EMPTY_LIST;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.github.wasiqb.coteafs.error.CoteafsError;
 import com.github.wasiqb.coteafs.error.enums.Category;
@@ -85,6 +90,40 @@ public class ErrorUtil {
             Severity.class };
         final Object [] args = new Object [] { message, cause, reason, category, severity };
         fail (cls, clsArray, args);
+    }
+
+    /**
+     * @author Wasiq Bhamla
+     * @since 02-Oct-2019
+     * @param rootPackage
+     * @param cause
+     * @return filtered stack trace
+     */
+    public static List<String> handleError (final String rootPackage, final Throwable cause) {
+        if (cause == null) {
+            return EMPTY_LIST;
+        }
+        final String stactTrace = "\tat {0}: {1} ({2})";
+        final List<String> stack = new ArrayList<> ();
+        stack.add (format ("Error occurred: {0}", cause.getMessage ()));
+        for (final StackTraceElement trace : cause.getStackTrace ()) {
+            if (rootPackage == null || trace.getClassName ()
+                .startsWith (rootPackage)) {
+                stack.add (format (stactTrace, trace.getClassName (), trace.getMethodName (), trace.getLineNumber ()));
+            }
+        }
+        stack.addAll (handleError (rootPackage, cause.getCause ()));
+        return stack;
+    }
+
+    /**
+     * @author Wasiq Bhamla
+     * @since 02-Oct-2019
+     * @param cause
+     * @return filtered stack trace
+     */
+    public static List<String> handleError (final Throwable cause) {
+        return handleError (null, cause);
     }
 
     /**
