@@ -16,6 +16,7 @@
 package com.github.wasiqb.coteafs.error.util;
 
 import static com.github.wasiqb.coteafs.error.util.ErrorUtil.fail;
+import static com.github.wasiqb.coteafs.error.util.ErrorUtil.handleError;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
@@ -48,7 +49,7 @@ public class ErrorUtilTest {
             fail (CoteafsError.class, "Test Error!", new FileNotFoundException (), Reason.R2, Category.C1,
                 Severity.CRITICAL);
         } catch (final CoteafsError e) {
-            System.err.println (e);
+            handleError ("com.github.wasiqb", e).forEach (System.err::println);
             throw e;
         }
     }
@@ -114,6 +115,7 @@ public class ErrorUtilTest {
         try {
             fail (OperationNotSupportedError.class, "Error");
         } catch (final OperationNotSupportedError e) {
+            handleError (e).forEach (System.err::println);
             assertThat (e.getReason ()
                 .reason ()).isEqualTo (Reason.R2.reason ());
             assertThat (e.getCategory ()
