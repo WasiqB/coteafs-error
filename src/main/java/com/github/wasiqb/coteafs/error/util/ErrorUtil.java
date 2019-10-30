@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2017, Wasiq Bhamla.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,11 +16,11 @@
 package com.github.wasiqb.coteafs.error.util;
 
 import static java.text.MessageFormat.format;
-import static java.util.Collections.EMPTY_LIST;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.github.wasiqb.coteafs.error.CoteafsError;
@@ -101,18 +101,29 @@ public class ErrorUtil {
      */
     public static List<String> handleError (final String rootPackage, final Throwable cause) {
         if (cause == null) {
-            return EMPTY_LIST;
+            return Collections.EMPTY_LIST;
         }
-        final String stactTrace = "\tat {0}: {1} ({2})";
+        Throwable throwable = cause;
         final List<String> stack = new ArrayList<> ();
-        stack.add (format ("Error occurred: {0}", cause.getMessage ()));
-        for (final StackTraceElement trace : cause.getStackTrace ()) {
-            if (rootPackage == null || trace.getClassName ()
-                .startsWith (rootPackage)) {
-                stack.add (format (stactTrace, trace.getClassName (), trace.getMethodName (), trace.getLineNumber ()));
+        boolean firstEntry = true;
+        stack.add (format ("Error occurred: ({0})", throwable.getClass ()
+            .getName ()));
+        final String stactTrace = "\tat {0}: {1} ({2})";
+        do {
+            if (!firstEntry) {
+                stack.add (format ("Caused by: ({0})", throwable.getClass ()));
             }
-        }
-        stack.addAll (handleError (rootPackage, cause.getCause ()));
+            stack.add (format ("Message: {0}", throwable.getMessage ()));
+            for (final StackTraceElement trace : cause.getStackTrace ()) {
+                if (rootPackage == null || trace.getClassName ()
+                    .startsWith (rootPackage)) {
+                    stack.add (
+                        format (stactTrace, trace.getClassName (), trace.getMethodName (), trace.getLineNumber ()));
+                }
+            }
+            firstEntry = false;
+            throwable = throwable.getCause ();
+        } while (throwable != null);
         return stack;
     }
 
@@ -126,13 +137,6 @@ public class ErrorUtil {
         return handleError (null, cause);
     }
 
-    /**
-     * @author Wasiq Bhamla
-     * @since Jul 31, 2017 5:03:52 PM
-     * @param cls
-     * @param clsArray
-     * @param args
-     */
     private static <T extends CoteafsError> void fail (final Class<T> cls, final Class<?> [] clsArray,
         final Object [] args) {
         try {
