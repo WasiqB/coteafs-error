@@ -31,7 +31,6 @@ import com.github.wasiqb.coteafs.error.OperationNotSupportedError;
 import com.github.wasiqb.coteafs.error.enums.Category;
 import com.github.wasiqb.coteafs.error.enums.Reason;
 import com.github.wasiqb.coteafs.error.enums.Severity;
-
 import org.testng.annotations.Test;
 
 /**
@@ -43,13 +42,13 @@ public class ErrorUtilTest {
      * @author Wasiq Bhamla
      * @since Jul 31, 2017 4:12:12 PM
      */
-    @Test (expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
-    public void testCoteafsErrorWithFiveArg () {
+    @Test(expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
+    public void testCoteafsErrorWithFiveArg() {
         try {
-            fail (CoteafsError.class, "Test Error!", new FileNotFoundException (), Reason.R2, Category.C1,
-                Severity.CRITICAL);
+            fail(CoteafsError.class, "Test Error!", new FileNotFoundException(), Reason.R2,
+                Category.C1, Severity.CRITICAL);
         } catch (final CoteafsError e) {
-            handleError ("com.github.wasiqb", e).forEach (System.err::println);
+            handleError("com.github.wasiqb", e).forEach(System.err::println);
             throw e;
         }
     }
@@ -58,33 +57,34 @@ public class ErrorUtilTest {
      * @author Wasiq Bhamla
      * @since Jul 24, 2017 5:12:55 PM
      */
-    @Test (expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
-    public void testCoteafsErrorWithFourArg () {
-        fail (CoteafsError.class, "Test Error!", Reason.R2, Category.C1, Severity.CRITICAL);
+    @Test(expectedExceptions = CoteafsError.class, expectedExceptionsMessageRegExp = "Test Error!")
+    public void testCoteafsErrorWithFourArg() {
+        fail(CoteafsError.class, "Test Error!", Reason.R2, Category.C1, Severity.CRITICAL);
     }
 
     /**
-     * @author Wasiq Bhamla
-     * @since Jul 24, 2017 4:34:18 PM
      * @throws InstantiationException
      * @throws IllegalAccessException
      * @throws NoSuchMethodException
      * @throws SecurityException
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
+     * @author Wasiq Bhamla
+     * @since Jul 24, 2017 4:34:18 PM
      */
     @Test
-    public void testInitializationFailure () throws InstantiationException, IllegalAccessException,
-        NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+    public void testInitializationFailure()
+        throws InstantiationException, IllegalAccessException, NoSuchMethodException,
+        SecurityException, IllegalArgumentException, InvocationTargetException {
         final Class<ErrorUtil> clazz = ErrorUtil.class;
-        final Constructor<ErrorUtil> constructor = clazz.getDeclaredConstructor ();
-        assertWithMessage ("ctor modifier").that (Modifier.isPrivate (constructor.getModifiers ()))
-            .isTrue ();
+        final Constructor<ErrorUtil> constructor = clazz.getDeclaredConstructor();
+        assertWithMessage("ctor modifier").that(Modifier.isPrivate(constructor.getModifiers()))
+            .isTrue();
         try {
-            constructor.setAccessible (true);
-            constructor.newInstance ();
+            constructor.setAccessible(true);
+            constructor.newInstance();
         } finally {
-            constructor.setAccessible (false);
+            constructor.setAccessible(false);
         }
     }
 
@@ -92,18 +92,18 @@ public class ErrorUtilTest {
      * @author Wasiq Bhamla
      * @since Jul 24, 2017 5:12:48 PM
      */
-    @Test (expectedExceptions = NotImplementedError.class, expectedExceptionsMessageRegExp = "Test Error!")
-    public void testNotImplementedErrorWithOneArg () {
-        fail (NotImplementedError.class, "Test Error!");
+    @Test(expectedExceptions = NotImplementedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+    public void testNotImplementedErrorWithOneArg() {
+        fail(NotImplementedError.class, "Test Error!");
     }
 
     /**
      * @author Wasiq Bhamla
      * @since Jul 24, 2017 5:15:19 PM
      */
-    @Test (expectedExceptions = NotImplementedError.class, expectedExceptionsMessageRegExp = "Test Error!")
-    public void testNotImplementedErrorWithTwoArg () {
-        fail (NotImplementedError.class, "Test Error!", new Throwable ());
+    @Test(expectedExceptions = NotImplementedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+    public void testNotImplementedErrorWithTwoArg() {
+        fail(NotImplementedError.class, "Test Error!", new Throwable());
     }
 
     /**
@@ -111,16 +111,16 @@ public class ErrorUtilTest {
      * @since Jul 24, 2017 4:58:29 PM
      */
     @Test
-    public void testOperationNotSupportedErrorTypes () {
+    public void testOperationNotSupportedErrorTypes() {
         try {
-            fail (OperationNotSupportedError.class, "Error");
+            fail(OperationNotSupportedError.class, "Error");
         } catch (final OperationNotSupportedError e) {
-            handleError (e).forEach (System.err::println);
-            assertThat (e.getReason ()
-                .reason ()).isEqualTo (Reason.R2.reason ());
-            assertThat (e.getCategory ()
-                .category ()).isEqualTo (Category.C1.category ());
-            assertThat (e.getSeverity ()).isEqualTo (Severity.CRITICAL);
+            handleError(e).forEach(System.err::println);
+            assertThat(e.getReason()
+                .reason()).isEqualTo(Reason.R2.reason());
+            assertThat(e.getCategory()
+                .category()).isEqualTo(Category.C1.category());
+            assertThat(e.getSeverity()).isEqualTo(Severity.CRITICAL);
         }
     }
 
@@ -128,17 +128,17 @@ public class ErrorUtilTest {
      * @author Wasiq Bhamla
      * @since Jul 23, 2017 2:55:32 PM
      */
-    @Test (expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
-    public void testOperationNotSupportedErrorWithOneArg () {
-        fail (OperationNotSupportedError.class, "Test Error!");
+    @Test(expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+    public void testOperationNotSupportedErrorWithOneArg() {
+        fail(OperationNotSupportedError.class, "Test Error!");
     }
 
     /**
      * @author Wasiq Bhamla
      * @since Jul 24, 2017 5:11:36 PM
      */
-    @Test (expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
-    public void testOperationNotSupportedErrorWithTwoArg () {
-        fail (OperationNotSupportedError.class, "Test Error!", new FileNotFoundException ());
+    @Test(expectedExceptions = OperationNotSupportedError.class, expectedExceptionsMessageRegExp = "Test Error!")
+    public void testOperationNotSupportedErrorWithTwoArg() {
+        fail(OperationNotSupportedError.class, "Test Error!", new FileNotFoundException());
     }
 }

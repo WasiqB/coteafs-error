@@ -23,36 +23,36 @@ public enum Category {
     /**
      * Internal error.
      */
-    C1 ("Internal"),
+    C1("Internal"),
     /**
      * Validation error.
      */
-    C2 ("Validation"),
+    C2("Validation"),
     /**
      * Reteival error.
      */
-    C3 ("Retreival"),
+    C3("Retreival"),
     /**
      * UI error.
      */
-    C4 ("UI"),
+    C4("UI"),
     /**
      * Message error.
      */
-    C5 ("Message");
+    C5("Message");
 
     private final String name;
 
-    private Category (final String name) {
+    Category(final String name) {
         this.name = name;
     }
 
     /**
+     * @return category
      * @author Wasiq Bhamla
      * @since Jul 8, 2017 8:57:50 PM
-     * @return category
      */
-    public String category () {
+    public String category() {
         return this.name;
     }
 }

@@ -23,32 +23,32 @@ public enum Reason {
     /**
      * Application error.
      */
-    R1 ("Application"),
+    R1("Application"),
     /**
      * Appium Framework error.
      */
-    R2 ("Appium"),
+    R2("Appium"),
     /**
      * Config framework error.
      */
-    R3 ("Configurations"),
+    R3("Configurations"),
     /**
      * API Services framework.
      */
-    R4 ("Services");
+    R4("Services");
 
     private final String name;
 
-    private Reason (final String name) {
+    Reason(final String name) {
         this.name = name;
     }
 
     /**
+     * @return reason
      * @author Wasiq Bhamla
      * @since Jul 8, 2017 8:51:08 PM
-     * @return reason
      */
-    public String reason () {
+    public String reason() {
         return this.name;
     }
 }

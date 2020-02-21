@@ -26,83 +26,84 @@ import com.github.wasiqb.coteafs.error.enums.Severity;
  * @since Jul 8, 2017 8:44:50 PM
  */
 public class CoteafsError extends AssertionError {
-    private static final long serialVersionUID = -350027873597069923L;
-    private final Category    errorCategory;
-    private final Reason      errorReason;
-    private final Severity    errorSeverity;
+    private static final long     serialVersionUID = -350027873597069923L;
+    private final        Category errorCategory;
+    private final        Reason   errorReason;
+    private final        Severity errorSeverity;
 
     /**
+     * @param message
      * @author Wasiq Bhamla
      * @since Jul 8, 2017 8:47:31 PM
-     * @param message
      */
-    public CoteafsError (final String message) {
-        this (message, null);
+    public CoteafsError(final String message) {
+        this(message, null);
     }
 
     /**
+     * @param message
+     * @param reason
+     * @param category
+     * @param severity
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:34:46 PM
-     * @param message
-     * @param reason
-     * @param category
-     * @param severity
      */
-    public CoteafsError (final String message, final Reason reason, final Category category, final Severity severity) {
-        this (message, null, reason, category, severity);
+    public CoteafsError(final String message, final Reason reason, final Category category,
+        final Severity severity) {
+        this(message, null, reason, category, severity);
     }
 
     /**
+     * @param message
+     * @param cause
      * @author Wasiq Bhamla
      * @since Jul 8, 2017 8:44:50 PM
-     * @param message
-     * @param cause
      */
-    public CoteafsError (final String message, final Throwable cause) {
-        this (message, cause, Reason.R2, Category.C1, Severity.CRITICAL);
+    public CoteafsError(final String message, final Throwable cause) {
+        this(message, cause, Reason.R2, Category.C1, Severity.CRITICAL);
     }
 
     /**
-     * @author Wasiq Bhamla
-     * @since Jul 9, 2017 12:31:32 PM
      * @param message
      * @param cause
      * @param reason
      * @param category
      * @param severity
+     * @author Wasiq Bhamla
+     * @since Jul 9, 2017 12:31:32 PM
      */
-    public CoteafsError (final String message, final Throwable cause, final Reason reason, final Category category,
-        final Severity severity) {
-        super (message, cause);
+    public CoteafsError(final String message, final Throwable cause, final Reason reason,
+        final Category category, final Severity severity) {
+        super(message, cause);
         this.errorReason = reason;
         this.errorCategory = category;
         this.errorSeverity = severity;
     }
 
     /**
+     * @return the category
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:32:14 PM
-     * @return the category
      */
-    public Category getCategory () {
+    public Category getCategory() {
         return this.errorCategory;
     }
 
     /**
+     * @return the reason
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:32:14 PM
-     * @return the reason
      */
-    public Reason getReason () {
+    public Reason getReason() {
         return this.errorReason;
     }
 
     /**
+     * @return the severity
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:32:14 PM
-     * @return the severity
      */
-    public Severity getSeverity () {
+    public Severity getSeverity() {
         return this.errorSeverity;
     }
 
@@ -111,8 +112,9 @@ public class CoteafsError extends AssertionError {
      * @see @see java.lang.Throwable#toString()
      */
     @Override
-    public String toString () {
-        return format ("Error occurred: {0}\nReason: {1}\nCategory: {2}\nSeverity: {3}", getMessage (),
-            this.errorReason.reason (), this.errorCategory.category (), this.errorSeverity.name ());
+    public String toString() {
+        return format("Error occurred: {0}\nReason: {1}\nCategory: {2}\nSeverity: {3}",
+            getMessage(), this.errorReason.reason(), this.errorCategory.category(),
+            this.errorSeverity.name());
     }
 }

@@ -32,123 +32,125 @@ import com.github.wasiqb.coteafs.error.enums.Severity;
  * @author Wasiq Bhamla
  * @since Jul 9, 2017 6:34:49 PM
  */
-public class ErrorUtil {
+public final class ErrorUtil {
     /**
+     * @param cls
+     * @param message
      * @author Wasiq Bhamla
      * @since Jul 31, 2017 5:10:39 PM
-     * @param cls
-     * @param message
      */
-    public static <T extends CoteafsError> void fail (final Class<T> cls, final String message) {
-        final Class<?> [] clsArray = new Class [] { String.class };
-        final Object [] args = new Object [] { message };
-        fail (cls, clsArray, args);
+    public static <T extends CoteafsError> void fail(final Class<T> cls, final String message) {
+        final Class<?>[] clsArray = new Class[] { String.class };
+        final Object[] args = new Object[] { message };
+        fail(cls, clsArray, args);
     }
 
     /**
+     * @param cls
+     * @param message
+     * @param reason
+     * @param category
+     * @param severity
      * @author Wasiq Bhamla
      * @since Jul 31, 2017 5:02:40 PM
-     * @param cls
-     * @param message
-     * @param reason
-     * @param category
-     * @param severity
      */
-    public static <T extends CoteafsError> void fail (final Class<T> cls, final String message, final Reason reason,
-        final Category category, final Severity severity) {
-        final Class<?> [] clsArray = new Class [] { String.class, Reason.class, Category.class, Severity.class };
-        final Object [] args = new Object [] { message, reason, category, severity };
-        fail (cls, clsArray, args);
+    public static <T extends CoteafsError> void fail(final Class<T> cls, final String message,
+        final Reason reason, final Category category, final Severity severity) {
+        final Class<?>[] clsArray = new Class[] { String.class, Reason.class, Category.class,
+            Severity.class };
+        final Object[] args = new Object[] { message, reason, category, severity };
+        fail(cls, clsArray, args);
     }
 
     /**
+     * @param cls
+     * @param message
+     * @param cause
      * @author Wasiq Bhamla
      * @since Jul 31, 2017 5:09:00 PM
-     * @param cls
-     * @param message
-     * @param cause
      */
-    public static <T extends CoteafsError> void fail (final Class<T> cls, final String message, final Throwable cause) {
-        final Class<?> [] clsArray = new Class [] { String.class, Throwable.class };
-        final Object [] args = new Object [] { message, cause };
-        fail (cls, clsArray, args);
+    public static <T extends CoteafsError> void fail(final Class<T> cls, final String message,
+        final Throwable cause) {
+        final Class<?>[] clsArray = new Class[] { String.class, Throwable.class };
+        final Object[] args = new Object[] { message, cause };
+        fail(cls, clsArray, args);
     }
 
     /**
-     * @author Wasiq Bhamla
-     * @since Jul 31, 2017 5:09:48 PM
      * @param cls
      * @param message
      * @param cause
      * @param reason
      * @param category
      * @param severity
+     * @author Wasiq Bhamla
+     * @since Jul 31, 2017 5:09:48 PM
      */
-    public static <T extends CoteafsError> void fail (final Class<T> cls, final String message, final Throwable cause,
-        final Reason reason, final Category category, final Severity severity) {
-        final Class<?> [] clsArray = new Class [] { String.class, Throwable.class, Reason.class, Category.class,
-            Severity.class };
-        final Object [] args = new Object [] { message, cause, reason, category, severity };
-        fail (cls, clsArray, args);
+    public static <T extends CoteafsError> void fail(final Class<T> cls, final String message,
+        final Throwable cause, final Reason reason, final Category category,
+        final Severity severity) {
+        final Class<?>[] clsArray = new Class[] { String.class, Throwable.class, Reason.class,
+            Category.class, Severity.class };
+        final Object[] args = new Object[] { message, cause, reason, category, severity };
+        fail(cls, clsArray, args);
     }
 
     /**
-     * @author Wasiq Bhamla
-     * @since 02-Oct-2019
      * @param rootPackage
      * @param cause
      * @return filtered stack trace
+     * @author Wasiq Bhamla
+     * @since 02-Oct-2019
      */
-    public static List<String> handleError (final String rootPackage, final Throwable cause) {
+    public static List<String> handleError(final String rootPackage, final Throwable cause) {
         if (cause == null) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         Throwable throwable = cause;
-        final List<String> stack = new ArrayList<> ();
+        final List<String> stack = new ArrayList<>();
         boolean firstEntry = true;
-        stack.add (format ("Error occurred: ({0})", throwable.getClass ()
-            .getName ()));
+        stack.add(format("Error occurred: ({0})", throwable.getClass()
+            .getName()));
         final String stactTrace = "\tat {0}: {1} ({2})";
         do {
             if (!firstEntry) {
-                stack.add (format ("Caused by: ({0})", throwable.getClass ()));
+                stack.add(format("Caused by: ({0})", throwable.getClass()));
             }
-            stack.add (format ("Message: {0}", throwable.getMessage ()));
-            for (final StackTraceElement trace : cause.getStackTrace ()) {
-                if (rootPackage == null || trace.getClassName ()
-                    .startsWith (rootPackage)) {
-                    stack.add (
-                        format (stactTrace, trace.getClassName (), trace.getMethodName (), trace.getLineNumber ()));
+            stack.add(format("Message: {0}", throwable.getMessage()));
+            for (final StackTraceElement trace : cause.getStackTrace()) {
+                if (rootPackage == null || trace.getClassName()
+                    .startsWith(rootPackage)) {
+                    stack.add(format(stactTrace, trace.getClassName(), trace.getMethodName(),
+                        trace.getLineNumber()));
                 }
             }
             firstEntry = false;
-            throwable = throwable.getCause ();
+            throwable = throwable.getCause();
         } while (throwable != null);
         return stack;
     }
 
     /**
-     * @author Wasiq Bhamla
-     * @since 02-Oct-2019
      * @param cause
      * @return filtered stack trace
+     * @author Wasiq Bhamla
+     * @since 02-Oct-2019
      */
-    public static List<String> handleError (final Throwable cause) {
-        return handleError (null, cause);
+    public static List<String> handleError(final Throwable cause) {
+        return handleError(null, cause);
     }
 
-    private static <T extends CoteafsError> void fail (final Class<T> cls, final Class<?> [] clsArray,
-        final Object [] args) {
+    private static <T extends CoteafsError> void fail(final Class<T> cls, final Class<?>[] clsArray,
+        final Object[] args) {
         try {
-            final Constructor<T> ctor = cls.getDeclaredConstructor (clsArray);
-            throw ctor.newInstance (args);
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-            | IllegalArgumentException | InvocationTargetException e) {
-            throw new CoteafsError ("Error occurred while throwing custom error.", e.getCause ());
+            final Constructor<T> ctor = cls.getDeclaredConstructor(clsArray);
+            throw ctor.newInstance(args);
+        } catch (final NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            throw new CoteafsError("Error occurred while throwing custom error.", e.getCause());
         }
     }
 
-    private ErrorUtil () {
+    private ErrorUtil() {
         // Utility class.
     }
 }
