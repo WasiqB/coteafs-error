@@ -99,6 +99,6 @@ In your `pom.xml`, add following block to use this POM,
 <dependency>
   <groupId>com.github.wasiqb.coteafs</groupId>
   <artifactId>error</artifactId>
-  <version>1.12.0</version>
+  <version>1.13.0</version>
 </dependency>
 ```
