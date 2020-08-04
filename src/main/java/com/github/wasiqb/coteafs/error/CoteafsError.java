@@ -33,11 +33,12 @@ public class CoteafsError extends AssertionError {
 
     /**
      * @param message
+     *
      * @author Wasiq Bhamla
      * @since Jul 8, 2017 8:47:31 PM
      */
-    public CoteafsError(final String message) {
-        this(message, null);
+    public CoteafsError (final String message) {
+        this (message, null);
     }
 
     /**
@@ -45,22 +46,23 @@ public class CoteafsError extends AssertionError {
      * @param reason
      * @param category
      * @param severity
+     *
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:34:46 PM
      */
-    public CoteafsError(final String message, final Reason reason, final Category category,
-        final Severity severity) {
-        this(message, null, reason, category, severity);
+    public CoteafsError (final String message, final Reason reason, final Category category, final Severity severity) {
+        this (message, null, reason, category, severity);
     }
 
     /**
      * @param message
      * @param cause
+     *
      * @author Wasiq Bhamla
      * @since Jul 8, 2017 8:44:50 PM
      */
-    public CoteafsError(final String message, final Throwable cause) {
-        this(message, cause, Reason.R2, Category.C1, Severity.CRITICAL);
+    public CoteafsError (final String message, final Throwable cause) {
+        this (message, cause, Reason.R2, Category.C1, Severity.CRITICAL);
     }
 
     /**
@@ -69,12 +71,13 @@ public class CoteafsError extends AssertionError {
      * @param reason
      * @param category
      * @param severity
+     *
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:31:32 PM
      */
-    public CoteafsError(final String message, final Throwable cause, final Reason reason,
-        final Category category, final Severity severity) {
-        super(message, cause);
+    public CoteafsError (final String message, final Throwable cause, final Reason reason, final Category category,
+        final Severity severity) {
+        super (message, cause);
         this.errorReason = reason;
         this.errorCategory = category;
         this.errorSeverity = severity;
@@ -82,28 +85,31 @@ public class CoteafsError extends AssertionError {
 
     /**
      * @return the category
+     *
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:32:14 PM
      */
-    public Category getCategory() {
+    public Category getCategory () {
         return this.errorCategory;
     }
 
     /**
      * @return the reason
+     *
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:32:14 PM
      */
-    public Reason getReason() {
+    public Reason getReason () {
         return this.errorReason;
     }
 
     /**
      * @return the severity
+     *
      * @author Wasiq Bhamla
      * @since Jul 9, 2017 12:32:14 PM
      */
-    public Severity getSeverity() {
+    public Severity getSeverity () {
         return this.errorSeverity;
     }
 
@@ -112,9 +118,8 @@ public class CoteafsError extends AssertionError {
      * @see @see java.lang.Throwable#toString()
      */
     @Override
-    public String toString() {
-        return format("Error occurred: {0}\nReason: {1}\nCategory: {2}\nSeverity: {3}",
-            getMessage(), this.errorReason.reason(), this.errorCategory.category(),
-            this.errorSeverity.name());
+    public String toString () {
+        return format ("Error occurred: {0}\nReason: {1}\nCategory: {2}\nSeverity: {3}", getMessage (),
+            this.errorReason.reason (), this.errorCategory.category (), this.errorSeverity.name ());
     }
 }

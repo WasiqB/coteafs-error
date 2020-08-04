@@ -24,20 +24,22 @@ public class OperationNotSupportedError extends CoteafsError {
 
     /**
      * @param message
+     *
      * @author Wasiq Bhamla
      * @since Jul 22, 2017 10:11:20 PM
      */
-    public OperationNotSupportedError(final String message) {
-        super(message);
+    public OperationNotSupportedError (final String message) {
+        super (message);
     }
 
     /**
      * @param message
      * @param cause
+     *
      * @author Wasiq Bhamla
      * @since Jul 22, 2017 10:11:20 PM
      */
-    public OperationNotSupportedError(final String message, final Throwable cause) {
-        super(message, cause);
+    public OperationNotSupportedError (final String message, final Throwable cause) {
+        super (message, cause);
     }
 }

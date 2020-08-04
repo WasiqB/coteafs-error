@@ -35,5 +35,5 @@ public enum Severity {
     /**
      * Medium priority error.
      */
-    MIDIUM
+    MEDIUM
 }
