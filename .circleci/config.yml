@@ -58,7 +58,7 @@ commands:
             echo "Pushing new version and tag..."
             git commit -am "released ${MVN_VERSION}"
             git tag -s v${MVN_VERSION} -m "Released v${MVN_VERSION}"
-            ssh-agent sh -c 'ssh-add ~/.ssh/id_rsa; git push git@github.com:WasiqB/coteafs-parent.git'
+            ssh-agent sh -c 'ssh-add ~/.ssh/id_rsa; git push git@github.com:WasiqB/coteafs-error.git'
             ssh-agent sh -c 'ssh-add ~/.ssh/id_rsa; git push origin --tags'
             echo "Succesfully released ${MVN_VERSION}"
       - save_cache:
