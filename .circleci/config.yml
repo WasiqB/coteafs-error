@@ -67,9 +67,8 @@ commands:
           key: coteafs-error-{{ checksum ".circleci/config.yml" }}
 
 jobs:
-  working_directory: ~/repo
-
   code_checkout:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - checkout
@@ -78,6 +77,7 @@ jobs:
           paths:
             - ~/repo
   resolve_dependencies:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - restore_cache:
@@ -91,6 +91,7 @@ jobs:
             - ~/.m2
           key: repo-dependency-{{ .Branch }}-{{ .Revision }}
   build:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - restore_cache:
@@ -105,6 +106,7 @@ jobs:
           paths:
             - target/
   test:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - restore_cache:
@@ -116,11 +118,14 @@ jobs:
       - run:
           name: Run Tests with Sonar Coverage
           command: mvn org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test
+      - store_test_results:
+          path: target/surefire-reports
       - save_cache:
           key: repo-reports-{{ .Branch }}-{{ .Revision }}
           paths:
             - reports/
   code_analysis:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - restore_cache:
@@ -134,19 +139,26 @@ jobs:
       - run:
           name: Update Sonar Analysis
           command: mvn package sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -DskipTests -Dsonar.branch.name=$CIRCLE_BRANCH
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   deploy-patch-version:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - deploy:
           version-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} versions:commit
           version-snapshot-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}-SNAPSHOT versions:commit
   deploy-minor-version:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - deploy:
           version-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.0 versions:commit
           version-snapshot-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT versions:commit
   deploy-major-version:
+    working_directory: ~/repo
     executor: maven-executor
     steps:
       - deploy:
