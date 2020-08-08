@@ -190,6 +190,7 @@ workflows:
             - build
       - code_analysis:
           filters: *all_branches
+          context: RELEASE_PROFILE_WASIQB
           requires:
             - test
       - approve-patch-version:
