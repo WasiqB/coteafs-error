@@ -1,231 +1,51 @@
 version: 2.1
 
-executors:
-  maven-executor:
-    docker:
-      - image: circleci/openjdk:11-jdk-stretch
+orbs:
+  maven-deploy: wasiqb/maven-deploy@2.0.3
 
-commands:
-  configure-gpg:
-    steps:
-      - run:
-          name: Configure GPG private key for signing project artifacts in OSS Sonatype
-          command: |
-            echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
-  configure-git:
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: Configure GIT with host fingerprint, user info and SSH key for pushing
-          command: |
-            mkdir -p ~/.ssh
-            echo "Adding github.com as known host..."
-            echo $GITHUB_FINGERPRINT >> ~/.ssh/known_hosts
-            echo "Setting private SSH key for pushing new version to repo..."
-            echo $GITHUB_COMMIT_KEY | base64 --decode >> ~/.ssh/id_rsa
-            echo "Setting permissions to avoid errors."
-            chmod 400 ~/.ssh/id_rsa # prevents "UNPROTECTED PRIVATE KEY FILE" error
-            chmod 755 ./.circleci/gpg-ci
-            git config user.name $GITHUB_USER_NAME
-            git config user.email $GITHUB_USER_EMAIL
-            git config gpg.program "./.circleci/gpg-ci"
-            git config user.signingkey $GPG_SIGNING_KEY
-  deploy:
-    parameters:
-      version-snapshot-command:
-        type: string
-      version-command:
-        type: string
-    steps:
-      - attach_workspace:
-          at: .
-      - configure-gpg
-      - configure-git
-      - run:
-          name: Release new version to Maven Central and push new project version to repo
-          command: |
-            echo $PWD
-            echo "Starting new release..."
-            << parameters.version-snapshot-command >>
-            MVN_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec)
-            echo "Releasing Snapshot version ${MVN_VERSION}..."
-            mvn deploy --settings .circleci/settings.xml -DskipTests -Dcheckstyle.skip -B -Prelease
-            << parameters.version-command >>
-            MVN_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec)
-            echo "Releasing version ${MVN_VERSION}..."
-            mvn deploy --settings .circleci/settings.xml -DskipTests -Dcheckstyle.skip -B -Prelease
-            echo "Pushing new version and tag..."
-            git commit -am "Released v${MVN_VERSION} [skip ci]"
-            git tag -s v${MVN_VERSION} -m "Released v${MVN_VERSION}"
-            ssh-agent sh -c 'ssh-add ~/.ssh/id_rsa; git push git@github.com:WasiqB/coteafs-error.git'
-            ssh-agent sh -c 'ssh-add ~/.ssh/id_rsa; git push origin --tags'
-            echo "Succesfully released ${MVN_VERSION}"
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: coteafs-error-{{ checksum ".circleci/config.yml" }}
-
-jobs:
-  code_checkout:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - checkout
-      - save_cache:
-          key: repo-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - ~/repo
-  resolve_dependencies:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - restore_cache:
-          keys:
-            - repo-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Resolve Dependencies
-          command: mvn clean dependency:resolve
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
-  build:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - restore_cache:
-          key: repo-{{ .Branch }}-{{ .Revision }}
-      - restore_cache:
-          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Build project
-          command: mvn compile
-      - save_cache:
-          key: repo-target-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - target/
-  test:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - restore_cache:
-          key: repo-{{ .Branch }}-{{ .Revision }}
-      - restore_cache:
-          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
-      - restore_cache:
-          key: repo-target-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Run Tests with Sonar Coverage
-          command: mvn org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test
-      - store_test_results:
-          path: target/surefire-reports
-      - save_cache:
-          key: repo-reports-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - reports/
-  code_analysis:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - restore_cache:
-          key: repo-{{ .Branch }}-{{ .Revision }}
-      - restore_cache:
-          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
-      - restore_cache:
-          key: repo-target-{{ .Branch }}-{{ .Revision }}
-      - restore_cache:
-          key: repo-reports-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Update Sonar Analysis
-          command: mvn package sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -DskipTests -Dsonar.branch.name=$CIRCLE_BRANCH
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-  deploy-patch-version:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - deploy:
-          version-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} versions:commit
-          version-snapshot-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}-SNAPSHOT versions:commit
-  deploy-minor-version:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - deploy:
-          version-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.0 versions:commit
-          version-snapshot-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT versions:commit
-  deploy-major-version:
-    working_directory: ~/repo
-    executor: maven-executor
-    steps:
-      - deploy:
-          version-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.0.0 versions:commit
-          version-snapshot-command: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.nextMajorVersion}.0.0-SNAPSHOT versions:commit
-
-filters: &all_branches
-  branches:
-    only:
-      - master
-      - /issue-.*/
+branches: &all
+  only:
+    - master
+    - release
+    - /issue-.*/
 
 workflows:
-  build_flow:
+  workflow:
     jobs:
-      - code_checkout:
-          filters: *all_branches
-      - resolve_dependencies:
-          filters: *all_branches
+      - maven-deploy/code-checkout
+      - maven-deploy/resolve-dependency:
           requires:
-            - code_checkout
-      - build:
-          filters: *all_branches
+            - maven-deploy/code-checkout
+          filters:
+            branches:
+              <<: *all
+      - maven-deploy/build:
           requires:
-            - resolve_dependencies
-      - test:
-          filters: *all_branches
+            - maven-deploy/resolve-dependency
+          filters:
+            branches:
+              <<: *all
+      - maven-deploy/test:
           requires:
-            - build
-      - code_analysis:
-          filters: *all_branches
+            - maven-deploy/build
+          filters:
+            branches:
+              <<: *all
+      - maven-deploy/sonar-analysis:
+          requires:
+            - maven-deploy/test
+          filters:
+            branches:
+              <<: *all
           context: RELEASE_PROFILE_WASIQB
-          requires:
-            - test
-      - approve-patch-version:
-          type: approval
+      - maven-deploy/deploy:
+          mentions: mfaisalkhatri,wbhamla1
+          fail_only: false
           filters:
             branches:
               only:
                 - master
           requires:
-            - code_analysis
-      - approve-minor-version:
-          type: approval
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - code_analysis
-      - approve-major-version:
-          type: approval
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - code_analysis
-      - deploy-patch-version:
-          requires:
-            - approve-patch-version
+            - maven-deploy/sonar-analysis
           context: RELEASE_PROFILE_WASIQB
-      - deploy-minor-version:
-          requires:
-            - approve-minor-version
-          context: RELEASE_PROFILE_WASIQB
-      - deploy-major-version:
-          requires:
-            - approve-major-version
-          context: RELEASE_PROFILE_WASIQB
+          deploy-command: mvn deploy --settings .circleci/settings.xml -DskipTests -Dcheckstyle.skip -B -Prelease
