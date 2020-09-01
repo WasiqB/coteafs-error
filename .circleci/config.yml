@@ -48,4 +48,4 @@ workflows:
           requires:
             - maven-deploy/sonar-analysis
           context: RELEASE_PROFILE_WASIQB
-          deploy-command: mvn deploy --settings .circleci/settings.xml -DskipTests -Dcheckstyle.skip -B -Prelease
+          deploy-command: mvn deploy --settings settings/settings.xml -DskipTests -Dcheckstyle.skip -B -Prelease
