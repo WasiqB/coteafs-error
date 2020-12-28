@@ -1,0 +1,5 @@
+name: CoTeAFS Error Suite
+tests:
+  - name: CoTeAFS Error Test
+    classes:
+      - com.github.wasiqb.coteafs.error.util.ErrorHandlerTest
