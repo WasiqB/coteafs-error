@@ -9,10 +9,31 @@
     <parent>
         <groupId>com.github.wasiqb.coteafs</groupId>
         <artifactId>parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.5.0</version>
     </parent>
 
+    <properties>
+        <lombok.version>1.18.16</lombok.version>
+        <datasource.version>1.2.0</datasource.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>com.github.wasiqb.coteafs</groupId>
+            <artifactId>datasource</artifactId>
+            <version>${datasource.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snake.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
