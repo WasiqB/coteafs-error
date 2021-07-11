@@ -5,16 +5,23 @@
     <artifactId>error</artifactId>
     <description>coteafs specific error.</description>
     <version>2.0.0</version>
+    <inceptionYear>2017</inceptionYear>
+    <url>https://github.com/WasiqB/coteafs-error</url>
+
+    <organization>
+        <name>Wasiq Bhamla</name>
+        <url>https://github.com/WasiqB</url>
+    </organization>
 
     <parent>
         <groupId>com.github.wasiqb.coteafs</groupId>
         <artifactId>parent</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.4</version>
     </parent>
 
     <properties>
-        <lombok.version>1.18.16</lombok.version>
-        <datasource.version>1.2.0</datasource.version>
+        <lombok.version>1.18.20</lombok.version>
+        <datasource.version>1.3.0</datasource.version>
     </properties>
 
     <dependencies>
