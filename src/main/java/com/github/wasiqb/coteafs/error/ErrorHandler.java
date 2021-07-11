@@ -42,8 +42,8 @@ public final class ErrorHandler {
      * @since 27-Dec-2020
      */
     public static <T extends Throwable> void fail (final Class<T> cls, final String messageId, final Object... args) {
-        final Class<?>[] clsArray = new Class[] { String.class };
-        final Object[] errorArgs = new Object[] { CODES.getMessage (messageId, args) };
+        final var clsArray = new Class[] { String.class };
+        final var errorArgs = new Object[] { CODES.getMessage (messageId, args) };
         fail (cls, clsArray, errorArgs);
     }
 
@@ -57,8 +57,8 @@ public final class ErrorHandler {
      */
     public static <T extends Throwable> void fail (final Class<T> cls, final Throwable cause, final String messageId,
         final Object... args) {
-        final Class<?>[] clsArray = new Class[] { String.class, Throwable.class };
-        final Object[] errorArgs = new Object[] { CODES.getMessage (messageId, args), cause };
+        final var clsArray = new Class[] { String.class, Throwable.class };
+        final var errorArgs = new Object[] { CODES.getMessage (messageId, args), cause };
         fail (cls, clsArray, errorArgs);
     }
 
@@ -75,12 +75,12 @@ public final class ErrorHandler {
         if (cause == null) {
             return Collections.emptyList ();
         }
-        Throwable throwable = cause;
+        var throwable = cause;
         final List<String> stack = new ArrayList<> ();
-        boolean firstEntry = true;
+        var firstEntry = true;
         stack.add (format ("Error occurred: ({0})", throwable.getClass ()
             .getName ()));
-        final String stackTrace = "\tat {0}: {1} ({2})";
+        final var stackTrace = "\tat {0}: {1} ({2})";
         do {
             if (!firstEntry) {
                 stack.add (format ("Caused by: ({0})", throwable.getClass ()));

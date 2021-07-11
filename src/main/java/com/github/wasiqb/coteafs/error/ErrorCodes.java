@@ -13,7 +13,7 @@ import lombok.Data;
  * @since 27-Dec-2020
  */
 @Data
-@DataFile
+@DataFile (folderPath = "src/main/resources")
 public class ErrorCodes {
     private Map<String, String> errors;
 
