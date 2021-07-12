@@ -20,7 +20,6 @@ import static com.github.wasiqb.coteafs.error.ErrorHandler.handleError;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 
 import com.github.wasiqb.coteafs.datasource.error.OperationNotSupportedError;
@@ -84,8 +83,8 @@ public class ErrorHandlerTest {
     @SneakyThrows
     @Test
     public void testInitializationFailure () {
-        final Class<ErrorHandler> clazz = ErrorHandler.class;
-        final Constructor<ErrorHandler> constructor = clazz.getDeclaredConstructor ();
+        final var clazz = ErrorHandler.class;
+        final var constructor = clazz.getDeclaredConstructor ();
         assertWithMessage ("ctor modifier").that (Modifier.isPrivate (constructor.getModifiers ()))
             .isTrue ();
         try {

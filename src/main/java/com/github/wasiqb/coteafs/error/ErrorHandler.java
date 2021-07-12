@@ -18,7 +18,6 @@ package com.github.wasiqb.coteafs.error;
 import static com.github.wasiqb.coteafs.datasource.DataSource.parse;
 import static java.text.MessageFormat.format;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,7 +85,7 @@ public final class ErrorHandler {
                 stack.add (format ("Caused by: ({0})", throwable.getClass ()));
             }
             stack.add (format ("Message: {0}", throwable.getMessage ()));
-            for (final StackTraceElement trace : throwable.getStackTrace ()) {
+            for (final var trace : throwable.getStackTrace ()) {
                 if (filterPackage == null || trace.getClassName ()
                     .startsWith (filterPackage)) {
                     stack.add (
@@ -115,7 +114,7 @@ public final class ErrorHandler {
     private static <T extends Throwable> void fail (final Class<T> cls, final Class<?>[] clsArray,
         final Object[] args) {
         try {
-            final Constructor<T> constructor = cls.getDeclaredConstructor (clsArray);
+            final var constructor = cls.getDeclaredConstructor (clsArray);
             throw constructor.newInstance (args);
         } catch (final NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             throw new OperationNotSupportedError ("Error occurred while throwing custom error.", e.getCause ());

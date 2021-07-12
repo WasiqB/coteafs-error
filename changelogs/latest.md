@@ -1,6 +1,6 @@
 ## :bug: Bug Fixes
 
-- [BREAKING]: [#12]: Refactor ErrorHandler class to consume ErrorCode class instead of hard coding it.
+- [#12]: Refactor ErrorCodes class to consume ErrorCode file from `src/main/resources` folder.
 
 ## :star_struck: Enhancements
 
