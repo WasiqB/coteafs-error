@@ -1,0 +1,34 @@
+name: "🐛 Bug report"
+description: Report errors or unexpected behavior in coteafs-error framework.
+labels:
+  - bug
+body:
+  - type: input
+    attributes:
+      label: coteafs-error version
+      placeholder: 2.1.0
+      description: The version of coteafs-error which caused the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: We highly suggest including a stacktrace and logs.
+      placeholder: Tell us the steps required to replicate your bug.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: ✔️ Expected Behavior
+      placeholder: What were you expecting?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: ❌ Actual Behavior
+      placeholder: What happened instead?
+    validations:
+      required: true
