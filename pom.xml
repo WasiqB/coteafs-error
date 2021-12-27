@@ -16,12 +16,12 @@
     <parent>
         <groupId>com.github.wasiqb.coteafs</groupId>
         <artifactId>parent</artifactId>
-        <version>3.6.4</version>
+        <version>3.8.0</version>
     </parent>
 
     <properties>
-        <lombok.version>1.18.20</lombok.version>
-        <datasource.version>1.3.0</datasource.version>
+        <lombok.version>1.18.22</lombok.version>
+        <datasource.version>1.4.0</datasource.version>
     </properties>
 
     <dependencies>
